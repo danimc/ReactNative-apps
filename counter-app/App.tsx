@@ -16,11 +16,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.textHuge}>{counter}</Text>
+      <FAB label="Suma +1" onPress={handleCounterButton} />
       <FAB
-        label="Suma +1"
+        label="Reiniciar contador"
         position="left"
-        onPress={handleCounterButton}
-        onLongPress={handleResetCounter}
+        onPress={handleResetCounter}
       />
       <StatusBar style="auto" />
     </View>
