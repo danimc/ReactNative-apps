@@ -1,7 +1,10 @@
 import React from 'react'
 import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 import { Slot } from 'expo-router'
+import { Colors } from '@/constants/Colors'
+import { globalStyles } from '@/styles/global-styles'
 
 const RootLayout = () => {
   const [loaded] = useFonts({
@@ -13,10 +16,9 @@ const RootLayout = () => {
   }
 
   return (
-    <View>
-      <Text>Header</Text>
+    <View style={globalStyles.background}>
       <Slot />
-      <Text>Footer</Text>
+      <StatusBar style="light" />
     </View>
   )
 }
