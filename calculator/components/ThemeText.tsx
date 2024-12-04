@@ -9,6 +9,7 @@ interface Props extends TextProps {
 const ThemeText = ({ children, variant = 'primary', ...props }: Props) => {
   return (
     <Text
+      {...props}
       style={[
         { color: 'white', fontFamily: 'SpaceMono' },
         variant === 'primary' && globalStyles.mainResult,
