@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-enum Operator {
+export enum Operator {
   ADD = '+',
   SUBTRACT = '-',
   MULTIPLY = '*',
@@ -15,7 +15,15 @@ export const useCalculator = () => {
   const lastOperation = React.useRef<Operator>()
 
   useEffect(() => {
-    setFormula(number)
+    if (lastOperation.current) {
+      setFormula(`${prevNumber} ${lastOperation.current} ${number}`)
+    } else {
+      setFormula(number)
+    }
+  }, [number])
+
+  useEffect(() => {
+    //setFormula(number)
   }, [number])
 
   const clean = () => {
@@ -67,6 +75,17 @@ export const useCalculator = () => {
     setNumber(number + numberString)
   }
 
+  const setLastNumber = () => {
+    if (number.endsWith('.')) return setPrevNumber(number.slice(0, -1))
+    setPrevNumber(number)
+    setNumber('0')
+  }
+
+  const handleOperation = (operation: Operator) => {
+    setLastNumber()
+    lastOperation.current = operation
+  }
+
   return {
     formula,
     number,
@@ -75,5 +94,6 @@ export const useCalculator = () => {
     clean,
     toggleSign,
     deleteLast,
+    handleOperation,
   }
 }
