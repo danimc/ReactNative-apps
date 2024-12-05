@@ -45,7 +45,7 @@ const CalculatorApp = () => {
           label="0"
           doubleSize
         />
-        <CalculatorButton label="." />
+        <CalculatorButton label="." onPress={() => buildNumber('.')} />
         <CalculatorButton label="=" color={Colors.orange} />
       </View>
     </View>

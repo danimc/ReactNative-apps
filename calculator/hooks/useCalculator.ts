@@ -19,7 +19,28 @@ export const useCalculator = () => {
   }, [number])
 
   const buildNumber = (numberString: string) => {
-    console.log('numberString', numberString)
+    if (number.includes('.') && numberString === '.') return
+    if (number.startsWith('0') && !number.startsWith('-0')) {
+      if (numberString === '.') {
+        return setNumber(number + numberString)
+      }
+
+      // evalúa si el número es 0 y no hay punto
+      if (numberString === '0' && number.includes('.')) {
+        return setNumber(number + numberString)
+      }
+
+      // evalúa si es diferente de 0 y no tiene punto y es el primer número
+      if (numberString !== '0' && !number.includes('.')) {
+        return setNumber(numberString)
+      }
+
+      // evita el 0000.0
+      if (numberString === '0' && !number.includes('.')) {
+        return
+      }
+    }
+    setNumber(number + numberString)
   }
 
   return {
