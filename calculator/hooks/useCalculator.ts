@@ -12,11 +12,35 @@ export const useCalculator = () => {
 
   const [number, setNumber] = useState('0')
   const [prevNumber, setPrevNumber] = useState('0')
-  const lastOperation = React.useRef<Operator | null>(null)
+  const lastOperation = React.useRef<Operator>()
 
   useEffect(() => {
     setFormula(number)
   }, [number])
+
+  const clean = () => {
+    setNumber('0')
+    setPrevNumber('0')
+    setFormula('0')
+
+    lastOperation.current = undefined
+  }
+
+  const toggleSign = () => {
+    if (number.includes('-')) {
+      setNumber(number.replace('-', ''))
+    } else {
+      setNumber(`-${number}`)
+    }
+  }
+
+  const deleteLast = () => {
+    if (number.length === 1 || (number.length === 2 && number.includes('-'))) {
+      setNumber('0')
+    } else {
+      setNumber(number.slice(0, -1))
+    }
+  }
 
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString === '.') return
@@ -48,5 +72,8 @@ export const useCalculator = () => {
     number,
     prevNumber,
     buildNumber,
+    clean,
+    toggleSign,
+    deleteLast,
   }
 }
