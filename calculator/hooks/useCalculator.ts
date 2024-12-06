@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 export enum Operator {
   ADD = '+',
@@ -12,7 +12,7 @@ export const useCalculator = () => {
 
   const [number, setNumber] = useState('0')
   const [prevNumber, setPrevNumber] = useState('0')
-  const lastOperation = React.useRef<Operator>()
+  const lastOperation = useRef<Operator>()
 
   useEffect(() => {
     if (lastOperation.current) {
@@ -23,8 +23,9 @@ export const useCalculator = () => {
   }, [number])
 
   useEffect(() => {
-    //setFormula(number)
-  }, [number])
+    const subResult = calculateSubResult()
+    setPrevNumber(subResult.toString())
+  }, [formula])
 
   const clean = () => {
     setNumber('0')
@@ -84,6 +85,24 @@ export const useCalculator = () => {
   const handleOperation = (operation: Operator) => {
     setLastNumber()
     lastOperation.current = operation
+  }
+
+  const calculateSubResult = () => {
+    const num1 = Number(prevNumber)
+    const num2 = Number(number)
+
+    switch (lastOperation.current) {
+      case Operator.ADD:
+        return num1 + num2
+      case Operator.SUBTRACT:
+        return num1 - num2
+      case Operator.MULTIPLY:
+        return num1 * num2
+      case Operator.DIVIDE:
+        return num1 / num2
+      default:
+        return num2
+    }
   }
 
   return {
