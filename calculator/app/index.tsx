@@ -8,13 +8,14 @@ import { Operator, useCalculator } from '@/hooks/useCalculator'
 
 const CalculatorApp = () => {
   const {
-    formula,
     buildNumber,
     clean,
-    toggleSign,
     deleteLast,
+    formula,
     handleOperation,
     prevNumber,
+    toggleSign,
+    calculateFormula,
   } = useCalculator()
 
   return (
@@ -74,7 +75,11 @@ const CalculatorApp = () => {
           doubleSize
         />
         <CalculatorButton label="." onPress={() => buildNumber('.')} />
-        <CalculatorButton label="=" color={Colors.orange} />
+        <CalculatorButton
+          onPress={calculateFormula}
+          label="="
+          color={Colors.orange}
+        />
       </View>
     </View>
   )

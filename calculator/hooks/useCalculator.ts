@@ -22,10 +22,14 @@ export const useCalculator = () => {
     }
   }, [number])
 
+  /*
   useEffect(() => {
     const subResult = calculateSubResult()
+
+   
     setPrevNumber(subResult.toString())
   }, [formula])
+  */
 
   const clean = () => {
     setNumber('0')
@@ -83,13 +87,19 @@ export const useCalculator = () => {
   }
 
   const handleOperation = (operation: Operator) => {
-    setLastNumber()
+    if (lastOperation.current) {
+      const subResult = calculateSubResult()
+      setPrevNumber(subResult.toString())
+      setNumber('0')
+    } else {
+      setLastNumber()
+    }
     lastOperation.current = operation
   }
 
   const calculateSubResult = () => {
-    const num1 = Number(prevNumber)
-    const num2 = Number(number)
+    const num1 = prevNumber ? Number(prevNumber) : 0
+    const num2 = number ? Number(number) : 0
 
     switch (lastOperation.current) {
       case Operator.ADD:
@@ -99,10 +109,18 @@ export const useCalculator = () => {
       case Operator.MULTIPLY:
         return num1 * num2
       case Operator.DIVIDE:
-        return num1 / num2
+        return num2 !== 0 ? num1 / num2 : 0
       default:
         return num2
     }
+  }
+
+  const calculateTotal = () => {
+    const subResult = calculateSubResult()
+    setFormula(subResult.toString())
+    setPrevNumber(' ')
+
+    lastOperation.current = undefined
   }
 
   return {
@@ -110,6 +128,7 @@ export const useCalculator = () => {
     number,
     prevNumber,
     buildNumber,
+    calculateFormula: calculateTotal,
     clean,
     toggleSign,
     deleteLast,
