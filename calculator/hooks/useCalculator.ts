@@ -118,6 +118,7 @@ export const useCalculator = () => {
   const calculateTotal = () => {
     const subResult = calculateSubResult()
     setFormula(subResult.toString())
+    setNumber(subResult.toString())
     setPrevNumber(' ')
 
     lastOperation.current = undefined
