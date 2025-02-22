@@ -24,7 +24,7 @@ const CustomButton = ({
       onPress={onPress}
       onLongPress={onLongPress}
     >
-      <Text className="text-white text-center active:opacity-90">
+      <Text className="text-white text-center active:opacity-90 font-work-medium">
         {children}
       </Text>
     </Pressable>
